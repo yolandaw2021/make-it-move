@@ -15,8 +15,8 @@ conda activate make-it-move
 ```
 ## Data Collection
 
-We use `selenium` to do data retrieval from `website`. You can run 
+We use `selenium` to do data retrieval from `[website](https://www.reddit.com/r/gifMemes/)`. You can run 
 ```
 python data_collection.py
 ```
-to update the meme dataset. Data is stored in the `Data` folder.
+to update the meme dataset. Data is stored in the `data` folder.

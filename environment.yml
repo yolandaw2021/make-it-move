@@ -90,6 +90,7 @@ dependencies:
   - yaml=0.2.5=h7b6447c_0
   - zlib=1.2.13=h5eee18b_0
   - zstd=1.5.2=ha4553b6_0
+  - pip==22.3.1=py310h8e6c178_0
   - pip:
     - async-generator==1.10
     - attrs==22.2.0
@@ -113,7 +114,6 @@ dependencies:
     - packaging==22.0
     - parso==0.8.3
     - pillow==9.3.0
-    - pip==22.3.1
     - ply==3.11
     - prompt-toolkit==3.0.37
     - ptpython==3.0.23

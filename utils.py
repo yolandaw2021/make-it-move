@@ -1,23 +1,24 @@
 import subprocess
 
 
-def key_frame(video_path):
+def key_frame(video_path, output_path=None):
+    if output_path is None:
+        output_path = video_path.replace(".mp4", ".jpg")
     print(f"Extracting a key frame from {video_path}")
-    subprocess.run(
-        [
-            "ffmpeg",
-            "-i",
-            video_path,
-            "-vf",
-            "select=eq(n\,0)",
-            "-q:v",
-            "2",
-            "-f",
-            "image2",
-            "key_frame.jpg",
-        ]
-    )
+    cmd = [
+        "ffmpeg",
+        "-i",
+        video_path,
+        "-vf",
+        "select=eq(n\,0)",
+        "-q:v",
+        "2",
+        "-f",
+        "image2",
+        output_path,
+    ]
+    subprocess.run(cmd)
 
 
 if __name__ == "__main__":
-    key_frame("/Users/fengyuli/Desktop/temp.mp4")    
+    key_frame("/Users/fengyuli/Desktop/temp.mp4")

@@ -5,7 +5,7 @@ import urllib.request
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.relative_locator import locate_with
 from selenium.webdriver.common.actions.wheel_input import ScrollOrigin
-import time
+import time 
 
 def _in_viewport(driver, element):
     script = (
@@ -37,7 +37,7 @@ for i in range(5000):
         ActionChains(driver).scroll_from_origin(ScrollOrigin.from_element(gif), 0, 200).perform()
     except:
         ActionChains(driver).scroll_by_amount(0, 1000).perform()
-    assert _in_viewport(driver, gif)
+    # assert _in_viewport(driver, gif)
     try:
         gif = driver.find_element(locate_with(By.TAG_NAME,  "video").below(gif))
     except:
@@ -46,14 +46,13 @@ for i in range(5000):
                 gif = driver.find_element(locate_with(By.TAG_NAME,  "video").below(gif))
                 break
             except:
-                ActionChains(driver).scroll_by_amount(0, 800).perform()
-                # try:
-                #     driver.implicitly_wait(5)
-                #     ActionChains(driver).scroll_from_origin(ScrollOrigin.from_element(gif), 0, 200).perform()
-                # except:
-                    # ActionChains(driver).scroll_by_amount(0, 800).perform()
+                # ActionChains(driver).scroll_by_amount(0, 800).perform()
+                try:
+                    driver.implicitly_wait(5)
+                    ActionChains(driver).scroll_from_origin(ScrollOrigin.from_element(gif), 0, 200).perform()
+                except:
+                    ActionChains(driver).scroll_by_amount(0, 800).perform()
                 continue
 driver.quit()
 
-# _2VF2J19pUIMSLJFky-7PEI
-# _2VF2J19pUIMSLJFky-7PEI
+# TODO: scroll by given amount not working

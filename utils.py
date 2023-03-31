@@ -1,4 +1,5 @@
 import subprocess
+import ffmpeg
 
 
 def key_frame(video_path, output_path=None):
@@ -21,4 +22,5 @@ def key_frame(video_path, output_path=None):
 
 
 if __name__ == "__main__":
-    key_frame("/Users/fengyuli/Desktop/temp.mp4")
+    for i in range(265):
+        key_frame(f"./data/meme{i}.mp4", f"./frames/meme{i}.jpg")

@@ -25,6 +25,6 @@ class BLIP2:
 
 if __name__ == "__main__":
     model = BLIP2()
-    image_path = [f'test_assets/memes{i}.jpg' for i in range(6)]
+    image_path = [f'test_assets/meme{i}.jpg' for i in range(6)]
     captions = [model.caption_image(image) for image in image_path]
     print(captions)

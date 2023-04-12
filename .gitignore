@@ -135,3 +135,5 @@ LICENSE.chromedriver
 # data
 data/
 frames/
+
+test_assets/

@@ -1,5 +1,4 @@
 import subprocess
-import ffmpeg
 
 
 def key_frame(video_path, output_path=None):

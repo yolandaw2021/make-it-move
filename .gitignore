@@ -131,3 +131,7 @@ dmypy.json
 # driver
 chromedriver
 LICENSE.chromedriver
+
+# data
+data/
+frames/

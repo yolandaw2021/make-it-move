@@ -6,7 +6,9 @@ pipe = DiffusionPipeline.from_pretrained("damo-vilab/text-to-video-ms-1.7b", tor
 pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
 pipe.enable_model_cpu_offload()
 
-prompt = "todo"
+# prompt = "A frog sitting under a pouring water pipe, looking very sad."
+# prompt = "An astronaut riding a horse."
+
 video_frames = pipe(prompt, num_inference_steps=25).frames
-video_path = export_to_video(video_frames)
+video_path = export_to_video(video_frames, output_video_path='videos/frog.mp4')
 print(video_path)

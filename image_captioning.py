@@ -2,6 +2,8 @@ from PIL import Image
 from cffi import model
 from transformers import Blip2Processor, Blip2ForConditionalGeneration
 import torch
+import os
+from tqdm import tqdm
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f'Current device: {device}')
@@ -21,10 +23,19 @@ class BLIP2:
         generated_ids = self.model.generate(**inputs)
         generated_text = self.processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
         return generated_text
-
+    
+    def caption_folder(self, image_folder="frames", output_folder="data"):
+        N = len(os.listdir(image_folder))
+        for i in tqdm(range(N), desc="Captioning images"):
+            image = f'{image_folder}/meme{i}.jpg'
+            caption = self.caption_image(image)
+            with open(f'meme{i}.txt', 'w') as f:
+                f.write(caption)
+        return True
 
 if __name__ == "__main__":
     model = BLIP2()
-    image_path = [f'test_assets/meme{i}.jpg' for i in range(6)]
-    captions = [model.caption_image(image) for image in image_path]
-    print(captions)
+    model.caption_folder()
+    # image_path = [f'frames/meme{i}.jpg' for i in range(6)]
+    # captions = [model.caption_image(image) for image in image_path]
+    # print(captions)

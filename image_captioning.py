@@ -50,3 +50,4 @@ def process_image(image_path):
 
 if __name__ == "__main__":
     answers = [process_image(f"test_assets/meme{i}.jpg") for i in range(6)]
+    print(answers)

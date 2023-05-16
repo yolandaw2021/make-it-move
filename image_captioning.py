@@ -53,4 +53,8 @@ if __name__ == "__main__":
     all_answers = [process_image(f"test_assets/meme{i}.jpg", prompts) for i in range(6)]
     print(all_answers)
     print("-------------")
-    print([query_gpt(prompts, answers) for answers in all_answers])
+    for answer in all_answers:
+        caption, ocr = query_gpt(prompts, answer)
+        print(caption)
+        print(ocr)
+        print("-------------")

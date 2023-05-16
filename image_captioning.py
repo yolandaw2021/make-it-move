@@ -4,6 +4,7 @@ from PIL import Image
 from cffi import model
 from transformers import Blip2Processor, Blip2ForConditionalGeneration
 import torch
+from chatgpt import query_gpt
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -19,7 +20,7 @@ class BLIP2:
         else:
             self.model = Blip2ForConditionalGeneration.from_pretrained(
                 "temp/blip.pt", torch_dtype=torch.float16
-            )
+            ) 
         self.model.to(device)
 
     def process_image(self, image_path, prompt):
@@ -27,20 +28,14 @@ class BLIP2:
         inputs = self.processor(images=image, text=prompt, return_tensors="pt").to(
             device, torch.float16
         )
-        generated_ids = self.model.generate(**inputs)
+        generated_ids = self.model.generate(**inputs, max_length=128)
         generated_text = self.processor.batch_decode(
             generated_ids, skip_special_tokens=True
         )[0].strip()
         return generated_text
 
 
-def process_image(image_path):
-    prompts = [
-        "Question: What is the text inside this image? Answer:",
-        "Question: What does the image mean? You must neglect any text in the image. Answer:",
-        "Create a very long and detailed caption for this image. You must neglect any text in the image.  Answer:",
-        "Question: Why is this image funny? Answer:",
-    ]
+def process_image(image_path, prompts):
     answers = []
     model = BLIP2()
     for prompt in prompts:
@@ -49,5 +44,13 @@ def process_image(image_path):
 
 
 if __name__ == "__main__":
-    answers = [process_image(f"test_assets/meme{i}.jpg") for i in range(6)]
-    print(answers)
+    prompts = [
+        "Question: What is the text inside this image? Answer:",
+        "Question: What does the image mean? You must neglect any text in the image. Answer:",
+        "Create a very long and detailed caption for this image. You must neglect any text in the image.  Answer:",
+        "Question: Why is this image funny? Answer:",
+    ]
+    all_answers = [process_image(f"test_assets/meme{i}.jpg", prompts) for i in range(6)]
+    print(all_answers)
+    print("-------------")
+    print([query_gpt(prompts, answers) for answers in all_answers])

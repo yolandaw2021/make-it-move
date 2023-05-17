@@ -4,9 +4,8 @@ import os
 # OpenAI API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-
 def query_gpt(vqa_prompts, vqa_responses, temperature=0):
-    prefix1 = "Describe a meme in detail, given the following BLIP-generated response to multiple VQA prompts:\n"
+    prefix1 = "Summarize a meme, given the following BLIP-generated response to multiple VQA prompts:\n"
     prefix2 = "Perform OCR on a meme, given the following BLIP-generated response to multiple VQA prompts:\n"
     vqa = "\n".join(
         [
@@ -14,7 +13,7 @@ def query_gpt(vqa_prompts, vqa_responses, temperature=0):
             for p, r in zip(vqa_prompts, vqa_responses)
         ]
     )
-    suffix1 = "\nNow, describe what the meme's about:"
+    suffix1 = "\nNow, describe the meme with phrases suitable as input to text-to-video generation model, include all details and don't change any information."
     suffix2 = "\nWhat is the exact text in the meme? Say No if there is no text:"
     message1 = [{"role": "user", "content": prefix1 + vqa + suffix1}]
     message2 = [{"role": "user", "content": prefix2 + vqa + suffix2}]

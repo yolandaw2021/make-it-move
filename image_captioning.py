@@ -11,6 +11,8 @@ from tqdm import tqdm
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
+
+
 class BLIP2:
     def __init__(self):
         self.processor = Blip2Processor.from_pretrained("Salesforce/blip2-opt-2.7b")
@@ -49,9 +51,7 @@ def caption_folder(image_folder="frames", output_folder="data"):
     N = len(os.listdir(image_folder))
     prompts = [
         "Question: What is the text inside this image? Answer:",
-        "Question: Create a caption that describes the scene in this image. You must neglect any text in the image. Answer:",
-        "Question: What does the image mean? You must neglect any text in the image. Answer:",
-        "Question: Why is this image funny? Answer:",
+        "Question: Exactly describes the scene in this image, including the color of the scene, the position and expression of the character, and more. You must neglect any text in the image. Answer:"
     ]
     model = BLIP2()
     for i in tqdm(range(N), desc="Captioning images"):
@@ -70,9 +70,10 @@ if __name__ == "__main__":
     # demo trial
     prompts = [
         "Question: What is the text inside this image? Answer:",
-        "Question: What does the image mean? You must neglect any text in the image. Answer:",
-        "Create a very long and detailed caption for this image. You must neglect any text in the image.  Answer:",
-        "Question: Why is this image funny? Answer:",
+        "Question: Is there a main character in the meme? If yes, describe the character in detail: position, motion, facial expression, and so on. Answer:"
+        "Question: What does the background look like? Exactly describe the background including the color of the scene, the components in the background, and the position of the components. You must neglect any text in the image. Answer:",
+        "Question: What is the style of drawing? Describe with words like: cartoon, realistic, magical, and so on. Answer:",
+        "Question: What is the emotion of the meme? Describe with words like: happy, sad, angry, sarcastic, and so on. Answer:"
     ]
     all_answers = [process_image(f"frames/meme{i}.jpg", prompts) for i in range(6)]
     print(all_answers)

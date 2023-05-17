@@ -55,33 +55,17 @@ def caption_folder(image_folder="frames", output_folder="data"):
     ]
     model = BLIP2()
     for i in tqdm(range(N), desc="Captioning images"):
-        image = f'{image_folder}/meme{i}.jpg'
+        image = f'{image_folder}/meme{i}_detext.jpg'
         answers = []
         for prompt in prompts:
             answers.append(model.process_image(image, prompt))
         caption, ocr = query_gpt(prompts, answers)
-        with open(f'{output_folder}/meme{i}.txt', 'w') as f:
+        with open(f'{output_folder}/meme{i}_detext.txt', 'w') as f:
             f.write(caption)
-        with open(f'{output_folder}/meme{i}_ocr.txt', 'w') as f:
+        with open(f'{output_folder}/meme{i}_detext_ocr.txt', 'w') as f:
             f.write(ocr)
     return True
 
-if __name__ == "__main__":
-    # demo trial
-    prompts = [
-        "Question: What is the text inside this image? Answer:",
-        "Question: What does the image mean? You must neglect any text in the image. Answer:",
-        "Create a very long and detailed caption for this image. You must neglect any text in the image.  Answer:",
-        "Question: Why is this image funny? Answer:",
-    ]
-    all_answers = [process_image(f"frames/meme{i}.jpg", prompts) for i in range(6)]
-    print(all_answers)
-    print("-------------")
-    for answer in all_answers:
-        caption, ocr = query_gpt(prompts, answer)
-        print(caption)
-        print(ocr)
-        print("-------------")
-    
+if __name__ == "__main__":    
     # create caption for dataset
-    caption_folder()
+    caption_folder(image_folder="frames/image2_detext", output_folder="data")

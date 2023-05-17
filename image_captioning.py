@@ -51,7 +51,10 @@ def caption_folder(image_folder="frames", output_folder="data"):
     N = len(os.listdir(image_folder))
     prompts = [
         "Question: What is the text inside this image? Answer:",
-        "Question: Exactly describes the scene in this image, including the color of the scene, the position and expression of the character, and more. You must neglect any text in the image. Answer:"
+        "Question: Is there a main character in the meme? If yes, describe the character in detail: position, motion, facial expression, and so on. Answer:"
+        "Question: What does the background look like? Exactly describe the background including the color of the scene, the components in the background, and the position of the components. You must neglect any text in the image. Answer:",
+        "Question: What is the style of drawing? Describe with words like: cartoon, realistic, magical, and so on. Answer:",
+        "Question: What is the emotion of the meme? Describe with words like: happy, sad, angry, sarcastic, and so on. Answer:"
     ]
     model = BLIP2()
     for i in tqdm(range(N), desc="Captioning images"):
@@ -85,4 +88,4 @@ if __name__ == "__main__":
         print("-------------")
     
     # create caption for dataset
-    caption_folder(image_folder="frames/image2_detext", output_folder="data")
+    caption_folder()

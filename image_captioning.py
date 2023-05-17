@@ -51,10 +51,12 @@ def caption_folder(image_folder="frames", output_folder="data"):
     N = len(os.listdir(image_folder))
     prompts = [
         "Question: What is the text inside this image? Answer:",
-        "Question: Is there a main character in the meme? If yes, describe the character in detail: position, motion, facial expression, and so on. Answer:"
-        "Question: What does the background look like? Exactly describe the background including the color of the scene, the components in the background, and the position of the components. You must neglect any text in the image. Answer:",
-        "Question: What is the style of drawing? Describe with words like: cartoon, realistic, magical, and so on. Answer:",
-        "Question: What is the emotion of the meme? Describe with words like: happy, sad, angry, sarcastic, and so on. Answer:"
+        "Question: Who is the main character? Describe with complete sentence. Answer:",
+        "Question: What is the main character doing? Describe with complete sentence. Answer:",
+        "Question: What is the color of the scene? Describe with complete sentence. Answer:",
+        "Question: What is in the background? Describe with complete sentence. Answer:",
+        "Question: What is the style of drawing? Describe with complete sentence. Answer:",
+        "Question: What is the emotion of the meme? Describe with complete sentence. Answer:"
     ]
     model = BLIP2()
     for i in tqdm(range(N), desc="Captioning images"):
@@ -71,21 +73,23 @@ def caption_folder(image_folder="frames", output_folder="data"):
 
 if __name__ == "__main__":
     # demo trial
-    prompts = [
-        "Question: What is the text inside this image? Answer:",
-        "Question: Is there a main character in the meme? If yes, describe the character in detail: position, motion, facial expression, and so on. Answer:"
-        "Question: What does the background look like? Exactly describe the background including the color of the scene, the components in the background, and the position of the components. You must neglect any text in the image. Answer:",
-        "Question: What is the style of drawing? Describe with words like: cartoon, realistic, magical, and so on. Answer:",
-        "Question: What is the emotion of the meme? Describe with words like: happy, sad, angry, sarcastic, and so on. Answer:"
-    ]
-    all_answers = [process_image(f"frames/meme{i}.jpg", prompts) for i in range(6)]
-    print(all_answers)
-    print("-------------")
-    for answer in all_answers:
-        caption, ocr = query_gpt(prompts, answer)
-        print(caption)
-        print(ocr)
-        print("-------------")
+    # prompts = [
+    #     "Question: What is the text inside this image? Answer:",
+    #     "Question: Who is the main character? Describe with complete sentence. Answer:",
+    #     "Question: What is the main character doing? Describe with complete sentence. Answer:",
+    #     "Question: What is the color of the scene? Describe with complete sentence. Answer:",
+    #     "Question: What is in the background? Describe with complete sentence. Answer:",
+    #     "Question: What is the style of drawing? Describe with complete sentence. Answer:",
+    #     "Question: What is the emotion of the meme? Describe with complete sentence. Answer:"
+    # ]
+    # all_answers = [process_image(f"frames/meme{i}.jpg", prompts) for i in range(6)]
+    # print(all_answers)
+    # print("-------------")
+    # for answer in all_answers:
+    #     caption, ocr = query_gpt(prompts, answer)
+    #     print(caption)
+    #     print(ocr)
+    #     print("-------------")
     
     # create caption for dataset
     caption_folder()

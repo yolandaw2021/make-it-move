@@ -60,36 +60,38 @@ def caption_folder(image_folder="frames", output_folder="data"):
     ]
     model = BLIP2()
     for i in tqdm(range(N), desc="Captioning images"):
-        image = f'{image_folder}/meme{i}_detext.jpg'
+        image = f'{image_folder}/meme{i}.jpg'
         answers = []
         for prompt in prompts:
             answers.append(model.process_image(image, prompt))
         caption, ocr = query_gpt(prompts, answers)
-        with open(f'{output_folder}/meme{i}_detext.txt', 'w') as f:
+        with open(f'{output_folder}/meme{i}.txt', 'w') as f:
             f.write(caption)
-        with open(f'{output_folder}/meme{i}_detext_ocr.txt', 'w') as f:
+        with open(f'{output_folder}/meme{i}_ocr.txt', 'w') as f:
             f.write(ocr)
     return True
 
 if __name__ == "__main__":
     # demo trial
-    # prompts = [
-    #     "Question: What is the text inside this image? Answer:",
-    #     "Question: Who is the main character? Describe with complete sentence. Answer:",
-    #     "Question: What is the main character doing? Describe with complete sentence. Answer:",
-    #     "Question: What is the color of the scene? Describe with complete sentence. Answer:",
-    #     "Question: What is in the background? Describe with complete sentence. Answer:",
-    #     "Question: What is the style of drawing? Describe with complete sentence. Answer:",
-    #     "Question: What is the emotion of the meme? Describe with complete sentence. Answer:"
-    # ]
-    # all_answers = [process_image(f"frames/meme{i}.jpg", prompts) for i in range(6)]
-    # print(all_answers)
-    # print("-------------")
-    # for answer in all_answers:
-    #     caption, ocr = query_gpt(prompts, answer)
-    #     print(caption)
-    #     print(ocr)
-    #     print("-------------")
+    prompts = [
+        "Question: What is the text inside this image? Answer:",
+        "Question: Who is the main character? Describe in detail. Answer:",
+        "Question: What is the main character doing? Describe with complete sentence. Answer:",
+        "Question: What is the color of the scene? Describe with complete sentence. Answer:",
+        "Question: What is in the background? Describe with complete sentence. Answer:",
+        "Question: What is the style of drawing? Describe with phrases like cartoon style, realistic style, fantasy, and so on. Answer:",
+        "Question: What is the emotion of the meme? Describe with phrases like, happy vibes, sad emotion, angry emotion, sarcastic humor, and so on. Answer:"
+    ]
+    model = BLIP2()
+    i = 122
+    image = f'frames/meme{i}.jpg'
+    answers = []
+    for prompt in prompts:
+        answers.append(model.process_image(image, prompt))
+    print("BLIP2 Answers: ", answers)
+    caption, ocr = query_gpt(prompts, answers)
+    print("caption: ",caption)
+    print("ocr: ", ocr)
     
     # create caption for dataset
-    caption_folder()
+    # caption_folder()

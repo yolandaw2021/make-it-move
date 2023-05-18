@@ -141,3 +141,10 @@ data_detext/
 temp/
 meme_explanation/
 text_output/
+
+output/
+models/lama.ckpt
+.vscode/
+models/model_scope_diffusers/
+text-to-video-ms-1.7b/
+trained_models/

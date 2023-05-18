@@ -23,7 +23,7 @@ def query_gpt(vqa_prompts, vqa_responses, temperature=0):
         temperature=temperature,
     )["choices"][0]["message"]["content"]
     response2 = openai.ChatCompletion.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",
         messages=message2,
         temperature=temperature,
     )["choices"][0]["message"]["content"]
